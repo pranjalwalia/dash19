@@ -15,6 +15,7 @@ import Map from "./components/Map";
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
 
   //! componentDidMount() alternative i.e. runs when component loads or state changes
   //! useEffect( () => , [countries])
@@ -36,9 +37,21 @@ function App() {
     getCountriesData();
   }, []);
 
-  const onCountryChange = (e) => {
+  const onCountryChange = async (e) => {
     const countryCode = e.target.value;
     setCountry(countryCode);
+
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+
+    await fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setCountry(countryCode);
+        setCountryInfo(data);
+      });
   };
 
   return (
@@ -65,9 +78,21 @@ function App() {
         </div>
 
         <div className="app__stats">
-          <InfoBox title="Cases" cases={1} total={2000} />
-          <InfoBox title="Recovered" cases={12} total={1000} />
-          <InfoBox title="Deaths" cases={123} total={100} />
+          <InfoBox
+            title="Cases"
+            cases={countryInfo.cases}
+            total={countryInfo.todayCases}
+          />
+          <InfoBox
+            title="Recovered"
+            cases={countryInfo.cases}
+            total={countryInfo.recovered}
+          />
+          <InfoBox
+            title="Deaths"
+            cases={countryInfo.cases}
+            total={countryInfo.deaths}
+          />
         </div>
 
         <div className="app__map">
