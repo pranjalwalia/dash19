@@ -17,6 +17,15 @@ function App() {
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
 
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then((res) => res.json())
+      .then((data) => {
+        setCountry("worldwide");
+        setCountryInfo(data);
+      });
+  }, [countryInfo]);
+
   //! componentDidMount() alternative i.e. runs when component loads or state changes
   //! useEffect( () => , [countries])
 
@@ -80,17 +89,17 @@ function App() {
         <div className="app__stats">
           <InfoBox
             title="Cases"
-            cases={countryInfo.cases}
-            total={countryInfo.todayCases}
+            cases={countryInfo.todayCases}
+            total={countryInfo.cases}
           />
           <InfoBox
             title="Recovered"
-            cases={countryInfo.cases}
+            cases={countryInfo.todayRecovered}
             total={countryInfo.recovered}
           />
           <InfoBox
             title="Deaths"
-            cases={countryInfo.cases}
+            cases={countryInfo.todayDeaths}
             total={countryInfo.deaths}
           />
         </div>
