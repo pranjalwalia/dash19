@@ -24,7 +24,7 @@ function App() {
         setCountry("worldwide");
         setCountryInfo(data);
       });
-  }, [countryInfo]);
+  }, []);
 
   //! componentDidMount() alternative i.e. runs when component loads or state changes
   //! useEffect( () => , [countries])
