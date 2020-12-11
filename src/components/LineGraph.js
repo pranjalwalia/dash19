@@ -7,6 +7,7 @@ import numeral from "numeral";
 function LineGraph() {
   const [data, setData] = useState({});
 
+  //! char config
   const options = {
     legend: {
       display: false,
@@ -52,7 +53,7 @@ function LineGraph() {
   };
 
   const buildChartData = (data, type = "cases") => {
-    let chartData = [];
+    const chartData = [];
     let lastDataPoint;
     for (let date in data.cases) {
       if (lastDataPoint) {
