@@ -62,6 +62,15 @@ function App() {
     getCountriesData();
   }, []);
 
+  //! causes zoom issues
+  // useEffect(() => {
+  //   if (country === "worldwide") {
+  //     setMapZoom(2);
+  //   } else {
+  //     setMapZoom(4);
+  //   }
+  // }, [mapCenter, country]);
+
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
     setCountry(countryCode);
@@ -144,6 +153,7 @@ function App() {
           <Map
             type={casesType}
             countries={mapCountries}
+            selectedCountry={country}
             center={mapCenter}
             zoom={mapZoom}
           />

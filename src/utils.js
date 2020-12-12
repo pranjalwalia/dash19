@@ -33,11 +33,17 @@ const casesTypeColors = {
 };
 
 //! draw circles on map with interactive tool-tips
-export const showDataonMap = (data, type = "cases") =>
+export const showDataonMap = (data, type = "cases", selectedCountry) =>
   data.map((country) => (
     <Circle
       center={[country.countryInfo.lat, country.countryInfo.long]}
       fillOpacity={0.4}
+      color={
+        country.countryInfo.iso2 === selectedCountry
+          ? casesTypeColors[type].selected
+          : casesTypeColors[type].hex
+      }
+      fillColor={casesTypeColors[type].hex}
       pathOptions={casesTypeColors[type].option}
       radius={Math.sqrt(country[type]) * casesTypeColors[type].multiplier * 0.4}
     >
@@ -61,3 +67,42 @@ export const showDataonMap = (data, type = "cases") =>
       </Popup>
     </Circle>
   ));
+
+/*export const showDataOnMap = (data, casesType, selectedCountry) =>
+  data.map((country, index) => (
+    <Circle
+      key={index}
+      center={[country.countryInfo.lat, country.countryInfo.long]}
+      fillOpacity={0.4}
+      color={
+        country.countryInfo.iso2 === selectedCountry
+          ? casesTypeColors[casesType].selected
+          : casesTypeColors[casesType].hex
+      }
+      fillColor={casesTypeColors[casesType].hex}
+      radius={
+        Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
+      }
+    >
+      <Popup>
+        <div className="info-container">
+          <div
+            className="info-flag"
+            style={{
+              backgroundImage: `url(${country.countryInfo.flag})`,
+            }}
+          ></div>
+          <div className="info-name">{country.country}</div>
+          <div className="info-cases">
+            Cases: {numeral(country.cases).format("0.0a")}
+          </div>
+          <div className="info-recovered">
+            Recovered: {numeral(country.recovered).format("0.0a")}
+          </div>
+          <div className="info-deaths">
+            Deaths: {numeral(country.deaths).format("0.0a")}
+          </div>
+        </div>
+      </Popup>
+    </Circle>
+  ));*/
