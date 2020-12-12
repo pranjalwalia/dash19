@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import numeral from "numeral";
 
-//! we gonna fetch the data for this component independently
-//! chart config
 const options = {
   legend: {
     display: false,
@@ -35,10 +33,11 @@ const options = {
     ],
     yAxes: [
       {
-        gridlines: {
+        gridLines: {
           display: false,
         },
         ticks: {
+          // Include a dollar sign in the ticks
           callback: (value, index, values) => {
             return numeral(value).format("0a");
           },
@@ -48,53 +47,55 @@ const options = {
   },
 };
 
-function LineGraph(props) {
-  const [data, setData] = useState({});
-  const { type } = props;
-
-  const buildChartData = (data, type = "cases") => {
-    const chartData = [];
-    let lastDataPoint;
-    for (let date in data.cases) {
-      if (lastDataPoint) {
-        let newDataPoint = {
-          x: date,
-          y: data[type][date] - lastDataPoint,
-        };
-        chartData.push(newDataPoint);
-      }
-      lastDataPoint = data[type][date];
+const buildChartData = (data, type) => {
+  let chartData = [];
+  let lastDataPoint;
+  for (let date in data.cases) {
+    if (lastDataPoint) {
+      let newDataPoint = {
+        x: date,
+        y: data[type][date] - lastDataPoint,
+      };
+      chartData.push(newDataPoint);
     }
-    return chartData;
-  };
+    lastDataPoint = data[type][date];
+  }
+  return chartData;
+};
+
+function LineGraph({ type }) {
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
-        .then((res) => res.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((data) => {
-          const chartData = buildChartData(data);
+          let chartData = buildChartData(data, type);
           setData(chartData);
+          // console.log(chartData);
         });
     };
+
     fetchData();
   }, [type]);
 
   return (
     <div>
-      {/* optional chaining */}
       {data && data.length > 0 && (
         <Line
-          options={options}
           data={{
             datasets: [
               {
-                data: data,
-                backgroundColor: "rgba(204 , 16 , 52, 0.5)",
+                backgroundColor: "rgba(204, 16, 52, 0.5)",
                 borderColor: "#CC1034",
+                data: data,
               },
             ],
           }}
+          options={options}
         />
       )}
     </div>

@@ -11,7 +11,7 @@ function ChangeView({ center, zoom }) {
 }
 
 function Map(props) {
-  const { center, zoom, countries, type } = props;
+  const { center, zoom, countries, type, selectedCountry } = props;
 
   return (
     <div className="map">

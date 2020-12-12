@@ -5,22 +5,23 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import "../InfoBox.css";
 
 function InfoBox(props) {
-  const { title, cases, total, onClick } = props;
+  const { title, cases, total, onClick, active, isRed } = props;
 
   return (
     <Card
       onClick={onClick}
-      className="infoBox"
-      style={{ backgroundColor: "#6c757d" }}
+      className={`infoBox ${active && "infoBox--selected"} ${
+        isRed && "infoBox--red"
+      }`}
     >
       <CardContent>
-        <Typography className="infoBox__title" color="textSecondary">
+        <Typography color="textSecondary" className="infoBox__title">
           {title}
         </Typography>
-
-        <h2 className="infoBox__cases">{cases}</h2>
-
-        <Typography className="infoBox__total" color="textSecondary">
+        <h2 className={`infoBox__cases ${!isRed && "infoBox__cases--green"}`}>
+          {cases}
+        </h2>
+        <Typography color="textSecondary" className="infoBox__total">
           {total} Total
         </Typography>
       </CardContent>

@@ -37,6 +37,8 @@ function App() {
       });
   }, []);
 
+  /** remove this debug shit  **/
+
   //! componentDidMount() alternative i.e. runs when component loads or state changes
   //! useEffect( () => , [countries])
 
@@ -81,7 +83,7 @@ function App() {
           setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
           setMapZoom(4);
         } else {
-          setMapCenter([41.5744,64.1833 ]);
+          setMapCenter([41.5744, 64.1833]);
           setMapZoom(3);
         }
       });
@@ -112,6 +114,8 @@ function App() {
 
         <div className="app__stats">
           <InfoBox
+            isRed
+            active={casesType === "cases"}
             onClick={(e) => {
               setCasesType("cases");
             }}
@@ -120,17 +124,16 @@ function App() {
             total={prettyPrintStat(countryInfo.cases)}
           />
           <InfoBox
-            onClick={(e) => {
-              setCasesType("recovered");
-            }}
+            active={casesType === "recovered"}
+            onClick={(event) => setCasesType("recovered")}
             title="Recovered"
             cases={prettyPrintStat(countryInfo.todayRecovered)}
             total={prettyPrintStat(countryInfo.recovered)}
           />
           <InfoBox
-            onClock={(e) => {
-              setCasesType("deaths");
-            }}
+            isRed
+            active={casesType === "deaths"}
+            onClick={(e) => setCasesType("deaths")}
             title="Deaths"
             cases={prettyPrintStat(countryInfo.todayDeaths)}
             total={prettyPrintStat(countryInfo.deaths)}
@@ -150,8 +153,8 @@ function App() {
         <CardContent>
           <h3>live cases by country</h3>
           <Table countries={tableData} />
-          <h3>worldwide new cases</h3>
-          <LineGraph />
+          <h3>worldwide new {casesType}</h3>
+          <LineGraph type={casesType} />
         </CardContent>
       </Card>
     </div>
