@@ -3,54 +3,54 @@ import { Line } from "react-chartjs-2";
 import numeral from "numeral";
 
 //! we gonna fetch the data for this component independently
+//! chart config
+const options = {
+  legend: {
+    display: false,
+  },
+  elements: {
+    point: {
+      radius: 0,
+    },
+  },
+  maintainAspectRatio: true,
+  tooltips: {
+    mode: "index",
+    intersect: false,
+    callbacks: {
+      label: (tooltipItem, data) => {
+        return numeral(tooltipItem.value).format("+0,0");
+      },
+    },
+  },
+  scales: {
+    xAxes: [
+      {
+        type: "time",
+        time: {
+          format: "MM/DD/YY",
+          tooltipFormat: "ll",
+        },
+      },
+    ],
+    yAxes: [
+      {
+        gridlines: {
+          display: false,
+        },
+        ticks: {
+          callback: (value, index, values) => {
+            return numeral(value).format("0a");
+          },
+        },
+      },
+    ],
+  },
+};
 
-function LineGraph() {
+function LineGraph(props) {
   const [data, setData] = useState({});
-
-  //! char config
-  const options = {
-    legend: {
-      display: false,
-    },
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
-    maintainAspectRatio: false,
-    tooltips: {
-      mode: "index",
-      intersect: false,
-      callbacks: {
-        label: function (tooltipItem, data) {
-          return numeral(tooltipItem.value).format("+0,0");
-        },
-      },
-    },
-    scales: {
-      xAxes: [
-        {
-          type: "time",
-          time: {
-            format: "MM/DD/YY",
-            tooltipFormat: "ll",
-          },
-        },
-      ],
-      yAxes: [
-        {
-          gridlines: {
-            display: false,
-          },
-          ticks: {
-            callback: function (value, index, values) {
-              return numeral(value).format("0a");
-            },
-          },
-        },
-      ],
-    },
-  };
+  const { type } = props;
 
   const buildChartData = (data, type = "cases") => {
     const chartData = [];
@@ -78,12 +78,10 @@ function LineGraph() {
         });
     };
     fetchData();
-  }, []);
+  }, [type]);
 
   return (
     <div>
-      <h1>I am a graph</h1>
-
       {/* optional chaining */}
       {data && data.length > 0 && (
         <Line

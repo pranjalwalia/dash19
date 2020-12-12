@@ -15,6 +15,9 @@ import Map from "./components/Map";
 import Table from "./components/Table";
 import LineGraph from "./components/LineGraph";
 
+//! leaftlet CDN css
+import "leaflet/dist/leaflet.css";
+
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
