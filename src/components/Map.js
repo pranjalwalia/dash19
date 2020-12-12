@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-
+import { showDataonMap } from "../utils";
 import "../Map.css";
 
 //! add in ChangeView.js
@@ -11,7 +11,7 @@ function ChangeView({ center, zoom }) {
 }
 
 function Map(props) {
-  const { center, zoom } = props;
+  const { center, zoom, countries, type } = props;
 
   return (
     <div className="map">
@@ -26,6 +26,7 @@ function Map(props) {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetLeafletMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {showDataonMap(countries, type)}
       </MapContainer>
     </div>
   );
