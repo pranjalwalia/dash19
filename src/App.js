@@ -7,6 +7,8 @@ import {
   CardContent,
 } from "@material-ui/core";
 
+import TextField from "@material-ui/core/TextField";
+
 import "./App.css";
 import { sortData, prettyPrintStat } from "./utils";
 
@@ -103,9 +105,18 @@ function App() {
     <div className="app">
       <div className="app__left">
         <div className="app__header">
-          <h1>DashBoard Covid-19</h1>
+          <h1 style={{ color: "red", fontFamily: "courier", fontSize: 30 }}>
+            DashBoard Covid-19
+          </h1>
           <FormControl className="app__dropdown">
+            {/* <TextField
+              select
+              label="Select"
+              value={country}
+              onChange={onCountryChange}
+            > */}
             <Select
+              // native
               variant="outlined"
               value={country}
               onChange={onCountryChange}
@@ -118,6 +129,7 @@ function App() {
                   {country.name}
                 </MenuItem>
               ))}
+              {/* </TextField> */}
             </Select>
           </FormControl>
         </div>
@@ -163,9 +175,10 @@ function App() {
       </div>
       <Card className="app__right">
         <CardContent>
-          <h3>live cases by country</h3>
+          <h3 align="center">Live Cases by Country</h3>
           <Table countries={tableData} />
-          <h3>worldwide new {casesType}</h3>
+          <br />
+          <h3 align="center">WorldWide New {casesType}</h3>
           <LineGraph type={casesType} />
         </CardContent>
       </Card>

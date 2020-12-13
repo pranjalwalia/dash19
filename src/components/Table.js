@@ -10,7 +10,7 @@ function Table(props) {
       {countries.map((country) => (
         <tr>
           <td>
-            <img src={country.countryInfo.flag} width="45px"></img>
+            <img src={country.countryInfo.flag}></img>
           </td>
           <td>{country.country}</td>
           <td>{numeral(country.cases).format("0,")}</td>

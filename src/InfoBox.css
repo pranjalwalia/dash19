@@ -2,8 +2,13 @@
   flex: 1;
   cursor: pointer;
 }
+
 .infoBox:not(:last-child) {
   margin-right: 15px;
+}
+
+.infoBox:hover {
+  background-color: #d8e0e7;
 }
 
 .infoBox__cases {
@@ -19,12 +24,15 @@
   font-size: 0.8rem !important;
   margin-top: 15px !important;
 }
+
 .infoBox--selected {
   border-top: 10px solid greenyellow;
 }
+
 .infoBox--red {
   border-color: red;
 }
+
 .infoBox__cases--green {
   color: green;
 }

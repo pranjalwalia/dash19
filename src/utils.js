@@ -1,7 +1,7 @@
 import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
-
+import "./Popup.css";
 export const sortData = (data) => {
   const sortedData = [...data];
   return sortedData.sort((a, b) => {
@@ -47,7 +47,7 @@ export const showDataonMap = (data, type = "cases", selectedCountry) =>
       pathOptions={casesTypeColors[type].option}
       radius={Math.sqrt(country[type]) * casesTypeColors[type].multiplier * 0.4}
     >
-      <Popup>
+      <Popup className="request-popup">
         <div className="info-container">
           <div
             className="info-flag"

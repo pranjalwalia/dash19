@@ -1,7 +1,9 @@
 .table {
   margin-top: 20px;
   height: 400px;
+  border-radius: 20px;
   overflow: scroll;
+  background-color: #d8e0e7;
   color: #6a5d5d;
 }
 
@@ -14,6 +16,11 @@
   padding: 0.5rem;
 }
 
-.table tr:nth-of-type(odd) {
+.table td img {
+  width: 45px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.table tr:nth-of-type(even) {
   background-color: #f3f2f8;
 }

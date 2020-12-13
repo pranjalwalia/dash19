@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #f5f6fa;
+  background-color: #f5e6dc;
 }
 
 .app {
@@ -21,6 +21,10 @@ body {
 
 .app__left {
   flex: 0.9;
+}
+
+.app__right:hover {
+  background-color: #d8e0e7;
 }
 
 .app__stats {
