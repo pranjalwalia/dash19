@@ -14,6 +14,7 @@ import InfoBox from "./components/InfoBox";
 import Map from "./components/Map";
 import Table from "./components/Table";
 import LineGraph from "./components/LineGraph";
+// import MapTest from "./components/MapTest";
 
 //! leaftlet CDN css
 import "leaflet/dist/leaflet.css";
@@ -150,6 +151,7 @@ function App() {
         </div>
 
         <div className="app__map">
+          {/* <MapTest center={mapCenter} zoom={mapZoom} /> */}
           <Map
             type={casesType}
             countries={mapCountries}

@@ -39,3 +39,10 @@
 .info-container {
   width: 150px;
 }
+
+.fa-map-marker-alt::before {
+  font-size: 12px;
+  position: absolute;
+  top: -2px;
+  left: 1px;
+}
