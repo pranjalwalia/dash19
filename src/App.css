@@ -23,6 +23,11 @@ body {
   flex: 0.9;
 }
 
+.app__right {
+  display: flex;
+  flex-direction: column;
+}
+
 .app__right:hover {
   background-color: #d8e0e7;
 }
