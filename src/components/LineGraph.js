@@ -63,8 +63,10 @@ const buildChartData = (data, type) => {
   return chartData;
 };
 
-function LineGraph({ type }) {
+const LineGraph = (props) => {
   const [data, setData] = useState({});
+
+  const { type } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +77,6 @@ function LineGraph({ type }) {
         .then((data) => {
           let chartData = buildChartData(data, type);
           setData(chartData);
-          // console.log(chartData);
         });
     };
 
@@ -110,6 +111,6 @@ function LineGraph({ type }) {
       )}
     </div>
   );
-}
+};
 
 export default LineGraph;

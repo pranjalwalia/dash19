@@ -13,22 +13,21 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function MapTest(props) {
+const MapTest = (props) => {
+  const { center, zoom } = props;
   return (
-    <MapContainer
-      center={props.center}
-      zoom={props.zoom}
-      style={{ height: "350px" }}
-    >
+    <MapContainer center={center} zoom={zoom} style={{ height: "350px" }}>
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
       />
-      <Marker position={props.center}>
+      <Marker position={center}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
       </Marker>
     </MapContainer>
   );
-}
+};
+
+export default MapTest;

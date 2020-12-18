@@ -9,34 +9,36 @@ import {
 
 import TextField from "@material-ui/core/TextField";
 
-import "./App.css";
-import { sortData, prettyPrintStat } from "./utils";
+import "./static/App.css";
+import { sortCasesDescending, formatCaseStats } from "./utils";
 
 import InfoBox from "./components/InfoBox";
 import Map from "./components/Map";
 import Table from "./components/Table";
 import LineGraph from "./components/LineGraph";
-// import MapTest from "./components/MapTest";
 
 //! leaftlet CDN css
 import "leaflet/dist/leaflet.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState("worldwide");
-  const [countryInfo, setCountryInfo] = useState({});
+  const [currentCountry, setCurrentCountry] = useState("worldwide");
+  const [currentCountryInfo, setCurrentCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 41.5744, lng: 64.1833 }); //! somewhere in kazak
-  const [mapZoom, setMapZoom] = useState(3);
-  const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
+  const [currentMapCenter, setCurrentMapCenter] = useState({
+    lat: 41.5744,
+    lng: 64.1833,
+  }); //! somewhere in kazak
+  const [currentMapZoom, setCurrentMapZoom] = useState(3);
+  const [currentMapCountries, setCurrentMapCountries] = useState([]);
+  const [currentCasesType, setCurrentCasesType] = useState("cases");
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
       .then((res) => res.json())
       .then((data) => {
-        setCountry("worldwide");
-        setCountryInfo(data);
+        setCurrentCountry("worldwide");
+        setCurrentCountryInfo(data);
       });
   }, []);
 
@@ -56,27 +58,18 @@ function App() {
             value: country.countryInfo.iso2,
             id: country._id,
           }));
-          const sortedData = sortData(data);
+          const sortedData = sortCasesDescending(data);
           setTableData(sortedData);
-          setMapCountries(data);
+          setCurrentMapCountries(data);
           setCountries(countries); //! contains only the country codes
         });
     };
     getCountriesData();
   }, []);
 
-  //! causes zoom issues
-  // useEffect(() => {
-  //   if (country === "worldwide") {
-  //     setMapZoom(2);
-  //   } else {
-  //     setMapZoom(4);
-  //   }
-  // }, [mapCenter, country]);
-
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
-    setCountry(countryCode);
+    setCurrentCountry(countryCode);
 
     const url =
       countryCode === "worldwide"
@@ -86,17 +79,15 @@ function App() {
     await fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setCountry(countryCode);
-        setCountryInfo(data);
-        // setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        // setMapZoom(3);
+        setCurrentCountry(countryCode);
+        setCurrentCountryInfo(data);
 
         if (data.countryInfo) {
-          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-          setMapZoom(4);
+          setCurrentMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+          setCurrentMapZoom(4);
         } else {
-          setMapCenter([41.5744, 64.1833]);
-          setMapZoom(3);
+          setCurrentMapCenter([41.5744, 64.1833]);
+          setCurrentMapZoom(3);
         }
       });
   };
@@ -118,10 +109,10 @@ function App() {
             <Select
               // native
               variant="outlined"
-              value={country}
+              value={currentCountry}
               onChange={onCountryChange}
             >
-              <MenuItem value="worldwide" key={country.id}>
+              <MenuItem value="worldwide" key={currentCountry.id}>
                 WorldWide
               </MenuItem>
               {countries.map((country) => (
@@ -137,39 +128,39 @@ function App() {
         <div className="app__stats">
           <InfoBox
             isRed
-            active={casesType === "cases"}
+            active={currentCasesType === "cases"}
             onClick={(e) => {
-              setCasesType("cases");
+              setCurrentCasesType("cases");
             }}
             title="Cases"
-            cases={prettyPrintStat(countryInfo.todayCases)}
-            total={prettyPrintStat(countryInfo.cases)}
+            cases={formatCaseStats(currentCountryInfo.todayCases)}
+            total={formatCaseStats(currentCountryInfo.cases)}
           />
           <InfoBox
-            active={casesType === "recovered"}
-            onClick={(event) => setCasesType("recovered")}
+            active={currentCasesType === "recovered"}
+            onClick={(event) => setCurrentCasesType("recovered")}
             title="Recovered"
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
-            total={prettyPrintStat(countryInfo.recovered)}
+            cases={formatCaseStats(currentCountryInfo.todayRecovered)}
+            total={formatCaseStats(currentCountryInfo.recovered)}
           />
           <InfoBox
             isRed
-            active={casesType === "deaths"}
-            onClick={(e) => setCasesType("deaths")}
+            active={currentCasesType === "deaths"}
+            onClick={(e) => setCurrentCasesType("deaths")}
             title="Deaths"
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
-            total={prettyPrintStat(countryInfo.deaths)}
+            cases={formatCaseStats(currentCountryInfo.todayDeaths)}
+            total={formatCaseStats(currentCountryInfo.deaths)}
           />
         </div>
 
         <div className="app__map">
           {/* <MapTest center={mapCenter} zoom={mapZoom} /> */}
           <Map
-            type={casesType}
-            countries={mapCountries}
-            selectedCountry={country}
-            center={mapCenter}
-            zoom={mapZoom}
+            type={currentCasesType}
+            countries={currentMapCountries}
+            selectedCountry={currentCountry}
+            center={currentMapCenter}
+            zoom={currentMapZoom}
           />
         </div>
       </div>
@@ -178,8 +169,10 @@ function App() {
           <h3 align="center">Live Cases by Country</h3>
           <Table countries={tableData} />
           <br />
-          <h3 align="center">WorldWide New {casesType}</h3>
-          <LineGraph type={casesType} />
+          <h3 align="center">
+            Global New {currentCasesType.toString().toUpperCase()}
+          </h3>
+          <LineGraph type={currentCasesType} />
         </CardContent>
       </Card>
     </div>

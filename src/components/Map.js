@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
-import "../Map.css";
+import "../static/Map.css";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -23,7 +23,7 @@ function ChangeView({ center, zoom }) {
   return null;
 }
 
-function Map(props) {
+const Map = (props) => {
   const { center, zoom, countries, type, selectedCountry } = props;
   return (
     <div className="map">
@@ -44,6 +44,6 @@ function Map(props) {
       </MapContainer>
     </div>
   );
-}
+};
 
 export default Map;

@@ -1,8 +1,9 @@
 import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
-import "./Popup.css";
-export const sortData = (data) => {
+import "./static/Popup.css";
+
+export const sortCasesDescending = (data) => {
   const sortedData = [...data];
   return sortedData.sort((a, b) => {
     if (a.cases > b.cases) {
@@ -13,22 +14,22 @@ export const sortData = (data) => {
   });
 };
 
-export const prettyPrintStat = (stat) => {
-  return stat ? `+${numeral(stat).format("0.0a")}` : "+0";
+export const formatCaseStats = (caseStatistics) => {
+  return caseStatistics ? `+${numeral(caseStatistics).format("0.0a")}` : "+0";
 };
 
-const casesTypeColors = {
+const caseColorComposition = {
   cases: {
-    multiplier: 800,
-    option: { color: "#cc1034", fillColor: "#cc1034" },
+    scaleFactor: 800,
+    inputOptions: { color: "#cc1034", fillColor: "#cc1034" },
   },
   recovered: {
-    multiplier: 1200,
-    option: { color: "#7dd71d", fillColor: "#7dd71d" },
+    scaleFactor: 1200,
+    inputOptions: { color: "#7dd71d", fillColor: "#7dd71d" },
   },
   deaths: {
-    multiplier: 2000,
-    option: { color: "#ff6c47", fillColor: "#ff6c47" },
+    scaleFactor: 2000,
+    inputOptions: { color: "#ff6c47", fillColor: "#ff6c47" },
   },
 };
 
@@ -40,12 +41,14 @@ export const showDataonMap = (data, type = "cases", selectedCountry) =>
       fillOpacity={0.4}
       color={
         country.countryInfo.iso2 === selectedCountry
-          ? casesTypeColors[type].selected
-          : casesTypeColors[type].hex
+          ? caseColorComposition[type].selected
+          : caseColorComposition[type].hex
       }
-      fillColor={casesTypeColors[type].hex}
-      pathOptions={casesTypeColors[type].option}
-      radius={Math.sqrt(country[type]) * casesTypeColors[type].multiplier * 0.4}
+      fillColor={caseColorComposition[type].hex}
+      pathOptions={caseColorComposition[type].inputOptions}
+      radius={
+        Math.sqrt(country[type]) * caseColorComposition[type].scaleFactor * 0.4
+      }
     >
       <Popup className="request-popup">
         <div className="info-container">
@@ -67,42 +70,3 @@ export const showDataonMap = (data, type = "cases", selectedCountry) =>
       </Popup>
     </Circle>
   ));
-
-/*export const showDataOnMap = (data, casesType, selectedCountry) =>
-  data.map((country, index) => (
-    <Circle
-      key={index}
-      center={[country.countryInfo.lat, country.countryInfo.long]}
-      fillOpacity={0.4}
-      color={
-        country.countryInfo.iso2 === selectedCountry
-          ? casesTypeColors[casesType].selected
-          : casesTypeColors[casesType].hex
-      }
-      fillColor={casesTypeColors[casesType].hex}
-      radius={
-        Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
-      }
-    >
-      <Popup>
-        <div className="info-container">
-          <div
-            className="info-flag"
-            style={{
-              backgroundImage: `url(${country.countryInfo.flag})`,
-            }}
-          ></div>
-          <div className="info-name">{country.country}</div>
-          <div className="info-cases">
-            Cases: {numeral(country.cases).format("0.0a")}
-          </div>
-          <div className="info-recovered">
-            Recovered: {numeral(country.recovered).format("0.0a")}
-          </div>
-          <div className="info-deaths">
-            Deaths: {numeral(country.deaths).format("0.0a")}
-          </div>
-        </div>
-      </Popup>
-    </Circle>
-  ));*/

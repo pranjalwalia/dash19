@@ -1,9 +1,8 @@
 import React from "react";
 import numeral from "numeral";
+import "../static/Table.css";
 
-import "../Table.css";
-
-function Table(props) {
+const Table = (props) => {
   const { countries } = props;
   return (
     <div className="table">
@@ -18,6 +17,6 @@ function Table(props) {
       ))}
     </div>
   );
-}
+};
 
 export default Table;
