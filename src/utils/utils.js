@@ -1,7 +1,7 @@
 import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
-import "./static/Popup.css";
+import "../static/Popup.css";
 
 export const sortCasesDescending = (data) => {
   const sortedData = [...data];

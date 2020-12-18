@@ -1,6 +1,6 @@
 import React from "react";
 import numeral from "numeral";
-import "../static/Table.css";
+import "../../static/Table.css";
 
 const Table = (props) => {
   const { countries } = props;

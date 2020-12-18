@@ -1,13 +1,13 @@
 import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
-import { showDataonMap } from "../utils";
+import { showDataonMap } from "../../utils/utils";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
-import "../static/Map.css";
+import "../../static/Map.css";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,

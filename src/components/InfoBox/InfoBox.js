@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import "../static/InfoBox.css";
+import "../../static/InfoBox.css";
 
 const InfoBox = (props) => {
   const { title, cases, total, onClick, active, isRed } = props;

@@ -10,12 +10,12 @@ import {
 import TextField from "@material-ui/core/TextField";
 
 import "./static/App.css";
-import { sortCasesDescending, formatCaseStats } from "./utils";
+import { sortCasesDescending, formatCaseStats } from "./utils/utils";
 
-import InfoBox from "./components/InfoBox";
-import Map from "./components/Map";
-import Table from "./components/Table";
-import LineGraph from "./components/LineGraph";
+import InfoBox from "./components/InfoBox/InfoBox";
+import Map from "./components/Map/Map";
+import Table from "./components/Table/Table";
+import LineGraph from "./components/LineGraph/LineGraph";
 
 //! leaftlet CDN css
 import "leaflet/dist/leaflet.css";
