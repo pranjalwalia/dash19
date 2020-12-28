@@ -5,6 +5,7 @@ import {
   Select,
   Card,
   CardContent,
+  Button,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
@@ -15,6 +16,7 @@ import InfoBox from "./components/InfoBox/InfoBox";
 import Map from "./components/Map/Map";
 import Table from "./components/Table/Table";
 import LineGraph from "./components/LineGraph/LineGraph";
+// import Footer from "./components/layouts/Footer";
 
 //! leaftlet CDN css
 import "leaflet/dist/leaflet.css";
@@ -95,6 +97,9 @@ function App() {
     <div className="app">
       <div className="app__left">
         <div className="app__header">
+          <Button variant="contained" color="primary" href="/about">
+            About🧐
+          </Button>
           <h1 style={{ color: "red", fontFamily: "courier", fontSize: 30 }}>
             DashBoard Covid-19
           </h1>
@@ -163,17 +168,23 @@ function App() {
           />
         </div>
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3 align="center">Live Cases by Country</h3>
-          <Table countries={tableData} />
-          <br />
-          <h3 align="center">
-            Global New {currentCasesType.toString().toUpperCase()}
-          </h3>
-          <LineGraph type={currentCasesType} />
-        </CardContent>
-      </Card>
+
+      <div className="container">
+        <Card className="app__right">
+          <CardContent>
+            <h3 align="center">Live Cases by Country</h3>
+            <Table countries={tableData} />
+            <br />
+            <h3 align="center">
+              Global New {currentCasesType.toString().toUpperCase()}
+            </h3>
+            <LineGraph type={currentCasesType} />
+          </CardContent>
+        </Card>
+      </div>
+      {/* <div className="app__footer">
+        <Footer />
+      </div> */}
     </div>
   );
 }
