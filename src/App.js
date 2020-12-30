@@ -17,7 +17,6 @@ import InfoBox from "./components/InfoBox/InfoBox";
 import Map from "./components/Map/Map";
 import Table from "./components/Table/Table";
 import LineGraph from "./components/LineGraph/LineGraph";
-// import Footer from "./components/layouts/Footer";
 
 //! leaftlet CDN css
 import "leaflet/dist/leaflet.css";
@@ -43,11 +42,6 @@ function App() {
         setCurrentCountryInfo(data);
       });
   }, []);
-
-  /** remove this debug shit  **/
-
-  //! componentDidMount() alternative i.e. runs when component loads or state changes
-  //! useEffect( () => , [countries])
 
   //! we just wanna fire once in the start and never again
   useEffect(() => {
@@ -183,9 +177,6 @@ function App() {
           </CardContent>
         </Card>
       </div>
-      {/* <div className="app__footer">
-        <Footer />
-      </div> */}
     </div>
   );
 }
